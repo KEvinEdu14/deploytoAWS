@@ -10,20 +10,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Descarga el código del repositorio
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # 2. Copia el archivo HTML a la instancia EC2
       - name: Copy HTML to EC2
-        uses: appleboy/scp-action@v0.2.4
+        uses: appleboy/scp-action@v0.1.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           source: "./index.html"
-          target: "/usr/share/nginx/html/"
+          target: "/var/www/html/"
 
+      # 3. Reinicia Nginx en la instancia EC2
       - name: Restart Nginx
-        uses: appleboy/ssh-action@v0.1.11
+        uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
