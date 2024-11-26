@@ -23,6 +23,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           source: "./index.html"
           target: "/var/www/html/"
+          command: "sudo mv index.html /var/www/html/" 
 
       # 3. Reinicia Nginx en la instancia EC2
       - name: Restart Nginx
